@@ -27,6 +27,7 @@ const AuthForm = ({ onAuthSuccess }: AuthFormProps) => {
       localStorage.setItem("token", data.token);
       onAuthSuccess(data.token);
       toast.success("Success");
+      alert("Authentication successful");
     } else {
       alert("Authentication failed");
     }

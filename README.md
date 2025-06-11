@@ -1,4 +1,4 @@
-# System Design Document: Task Management App
+# Task Management App
 
 ## 1. Overview
 
@@ -11,7 +11,7 @@ A lightweight task management application for a single user type (basic user) wi
 * User Signup and Login using JWT
 * Create, Read, Update, Delete (CRUD) Tasks
 * Filter Tasks by Priority and Status
-* Responsive UI with TailwindCSS and DaisyUI
+* UI with TailwindCSS and DaisyUI
 
 ---
 
@@ -42,36 +42,12 @@ A lightweight task management application for a single user type (basic user) wi
 
 ---
 
-## 6. Data Model
-
-### User
-
-```sql
-  id SERIAL PRIMARY KEY,
-  username VARCHAR(255) UNIQUE NOT NULL,
-  password TEXT NOT NULL
-```
-
-### Task
-
-```sql
-  id SERIAL PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  priority VARCHAR(50),
-  status VARCHAR(50),
-  user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-```
-
----
-
-## 7. Database Diagram
+## 6. Database Diagram
 
 ```text
-┌────────────┐         ┌────────────┐
-│   users    │         │   tasks    │
-├────────────┤         ├────────────┤
+┌────────────┐         ┌──────────────┐
+│   users    │         │   tasks      │
+├────────────┤         ├──────────────┤
 │ id (PK)    │◄────────│ user_id (FK) │
 │ email      │         │ id (PK)      │
 │ password   │         │ title        │
@@ -79,13 +55,12 @@ A lightweight task management application for a single user type (basic user) wi
 └────────────┘         │ priority     │
                        │ status       │
                        │ created_at   │
-                       │ updated_at   │
-                       └────────────┘
+                       └──────────────┘
 ```
 
 ---
 
-## 8. API Endpoints
+## 7. API Endpoints
 
 ### Auth
 
@@ -101,14 +76,14 @@ A lightweight task management application for a single user type (basic user) wi
 
 ---
 
-## 9. JWT Authentication
+## 8. JWT Authentication
 
 * JWT is issued at login and stored client-side
 * Each protected route expects `Authorization: Bearer <token>` header
 
 ---
 
-## 10. Docker Setup
+## 9. Docker Setup
 
 * `frontend` service: React dev server
 * `backend` service: Node.js with Express API
@@ -116,9 +91,9 @@ A lightweight task management application for a single user type (basic user) wi
 
 ---
 
-## 11. Environment Variables (.env Instructions)
+## 10. Environment Variables (.env Instructions)
 
-To store secrets and configuration values securely, create a `.env` file in both frontend and backend root directories.
+To store secrets and configuration values securely, create a `.env` file in server root directory.
 
 ### `.env` for Backend
 
@@ -140,32 +115,58 @@ JWT_EXPIRES_IN=1h
 
 ---
 
+## 11. Running the App with Docker
+
+### 🧱 Prerequisites
+
+* Clone the repository:
+
+```bash
+git clone https://github.com/your-username/task-manager-app.git
+cd task-manager-app
+```
+
+### ⚙️ Setup
+
+1. Create `.env` files in `server/` as explained above
+2. Ensure `docker-compose.yml` exists in the root of the project
+
+### 🚀 Run the App
+
+```bash
+docker compose up --build
+```
+
+### 🌐 Access URLs
+
+* Frontend: [http://localhost:5173](http://localhost:5173)
+* Backend: [http://localhost:3000](http://localhost:3000)
+* PostgreSQL: `localhost:5432`
+
+### 🛑 Stop the App
+
+```bash
+docker compose down
+```
+
+To remove volumes and reset database:
+
+```bash
+docker compose down -v
+```
+
+
+---
+
 ## 12. Future Enhancements
 
-* Token refresh and expiry handling
-* Due dates and reminders
-* User profile and settings
-* Deployment setup (e.g., Vercel + Railway)
-* Unit and integration tests
-
----
-
-## 13. Security Considerations
-
 * Passwords are hashed with bcrypt
-* JWTs are signed with a secret key and verified on every protected request
-* Input validation and error handling on both frontend and backend
+* Add search function
+* Task notification
+* Add CI/CD pipeline
 
 ---
 
-## 14. Limitations
-
-* Local only: not designed for production scalability yet
-* No role-based access control (RBAC)
-* No file uploads or real-time updates
-
----
-
-## 15. Conclusion
+## 13. Conclusion
 
 This system design outlines a minimal but complete full-stack task manager application with local development and strong separation of concerns between frontend, backend, and database layers.
