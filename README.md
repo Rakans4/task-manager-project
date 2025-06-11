@@ -51,8 +51,8 @@ A lightweight task management application for a single user type (basic user) wi
 │ id (PK)    │◄────────│ user_id (FK) │
 │ email      │         │ id (PK)      │
 │ password   │         │ title        │
-│ created_at │         │ description  │
-└────────────┘         │ priority     │
+└────────────┘         │ description  │
+                       │ priority     │
                        │ status       │
                        │ created_at   │
                        └──────────────┘
