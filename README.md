@@ -117,7 +117,7 @@ JWT_EXPIRES_IN=1h
 
 ## 11. Running the App with Docker
 
-### 🧱 Prerequisites
+### Prerequisites
 
 * Clone the repository:
 
@@ -126,24 +126,24 @@ git clone https://github.com/your-username/task-manager-app.git
 cd task-manager-app
 ```
 
-### ⚙️ Setup
+### Setup
 
 1. Create `.env` files in `server/` as explained above
 2. Ensure `docker-compose.yml` exists in the root of the project
 
-### 🚀 Run the App
+### Run the App
 
 ```bash
 docker compose up --build
 ```
 
-### 🌐 Access URLs
+### Access URLs
 
 * Frontend: [http://localhost:5173](http://localhost:5173)
 * Backend: [http://localhost:3000](http://localhost:3000)
 * PostgreSQL: `localhost:5432`
 
-### 🛑 Stop the App
+### Stop the App
 
 ```bash
 docker compose down
