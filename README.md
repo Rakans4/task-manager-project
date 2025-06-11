@@ -69,7 +69,7 @@ A lightweight task management application for a single user type (basic user) wi
 
 ### Tasks (JWT required)
 
-* `GET api/tasks?priority=high&status=todo` → Filtered list
+* `GET api/tasks?priority=High&status=Pending` → Filtered list
 * `POST api/tasks` → Create task
 * `PUT api/tasks/:id` → Update task
 * `DELETE api/tasks/:id` → Delete task
