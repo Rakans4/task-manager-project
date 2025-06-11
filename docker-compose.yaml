@@ -1,0 +1,35 @@
+services:
+  backend:
+    build: ./server
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=postgres
+      - DB_USER=dbadmin
+      - DB_PASSWORD=123
+      - DB_NAME=testdb
+    depends_on:
+      - postgres
+
+  frontend:
+    build: ./task_manager
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_URL=services:3000
+    depends_on:
+      - backend
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: dbadmin
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: testdb
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+volumes:
+  pgdata:
