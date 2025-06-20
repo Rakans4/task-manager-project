@@ -24,6 +24,7 @@ const TaskManager = () => {
   const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
   const [priority, setPriority] = useState("");
   const [status, setStatus] = useState("");
+  const [search, setSearch] = useState("");
 
   const api = getApiClient(token);
 
@@ -32,6 +33,7 @@ const TaskManager = () => {
       const params = new URLSearchParams();
       if (priority) params.append("priority", priority);
       if (status) params.append("status", status);
+      if(search) params.append("keyword", search);
       const res = await api.get(`/tasks`, { params });
       setTasks(res.data);
       toast.success("Task created!");
@@ -99,6 +101,13 @@ const TaskManager = () => {
       </div>
 
       <div className="flex gap-2 mb-4">
+        <input
+          type="text"
+          placeholder="Search tasks"
+          className="input input-bordered w-full max-w-md"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         <select value={priority} onChange={e => setPriority(e.target.value)} className="border p-2 rounded">
           <option value="">All Priorities</option>
           <option value="High">High</option>

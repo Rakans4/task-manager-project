@@ -20,10 +20,14 @@ router.post('/', authenticateToken, async (req, res) => {
 
 // Get all tasks for logged-in user (optional filters)
 router.get('/', authenticateToken, async (req, res) => {
-  const { status, priority } = req.query;
+  const { keyword, status, priority } = req.query;
   let query = 'SELECT * FROM tasks WHERE user_id = $1';
   const values = [req.user.userId];
 
+  if(keyword) {
+    values.push(`%${keyword}%`);
+    query += ` AND (title ILIKE $${values.length} OR description ILIKE $${values.length})`
+  }
   if (status) {
     values.push(status);
     query += ` AND status = $${values.length}`;
