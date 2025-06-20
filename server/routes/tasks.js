@@ -21,8 +21,6 @@ router.post('/', authenticateToken, async (req, res) => {
 // Get all tasks for logged-in user (optional filters)
 router.get('/', authenticateToken, async (req, res) => {
   const { status, priority } = req.query;
-  console.log(status, priority);
-  console.log(req.query);
   let query = 'SELECT * FROM tasks WHERE user_id = $1';
   const values = [req.user.userId];
 
@@ -34,8 +32,6 @@ router.get('/', authenticateToken, async (req, res) => {
     values.push(priority);
     query += ` AND priority = $${values.length}`;
   }
-
-  console.log(query, values);
   try {
     const result = await pool.query(query, values);
     res.json(result.rows);
